@@ -2,24 +2,36 @@
   "name": "soft-report",
   "version": "1.0.0",
   "description": "Basic Electron desktop application template with Node.js and TypeScript.",
-  "main": "dist/main.js",
+  "main": "dist/main/index.js",
   "private": true,
   "type": "commonjs",
   "scripts": {
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
-    "build": "npm run clean && tsc",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "build:renderer": "vite build",
+    "build": "npm run clean && npm run build:electron && npm run build:renderer",
     "typecheck": "tsc --noEmit",
-    "watch": "tsc -w --preserveWatchOutput",
-    "dev:electron": "wait-on dist/main.js dist/preload.js dist/renderer.js && nodemon --watch dist --watch index.html --ext js,html --exec electron .",
-    "dev": "concurrently -k -n TSC,ELECTRON -c yellow,cyan \"npm run watch\" \"npm run dev:electron\"",
+    "dev:electron:compile": "tsc -p tsconfig.electron.json -w --preserveWatchOutput",
+    "dev:renderer": "vite",
+    "dev:electron": "wait-on tcp:5173 dist/main/index.js dist/preload/index.js && cross-env ELECTRON_RENDERER_URL=http://127.0.0.1:5173 nodemon --watch dist --ext js --exec electron .",
+    "dev": "concurrently -k -n TSC,VITE,ELECTRON -c yellow,cyan,green \"npm run dev:electron:compile\" \"npm run dev:renderer\" \"npm run dev:electron\"",
     "start": "npm run build && electron ."
   },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
   "devDependencies": {
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
     "@types/node": "^24.6.0",
     "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
     "electron": "^41.2.0",
     "nodemon": "^3.1.10",
     "typescript": "^5.9.3",
+    "vite": "^7.1.10",
     "wait-on": "^8.0.4"
   }
 }

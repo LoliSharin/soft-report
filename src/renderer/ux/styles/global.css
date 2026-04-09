@@ -1,0 +1,112 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #111827;
+  background:
+    radial-gradient(circle at top left, rgba(14, 165, 233, 0.24), transparent 32%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.2), transparent 26%),
+    linear-gradient(145deg, #f4f7fb 0%, #e9f1fb 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.home-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+}
+
+.hero-panel {
+  width: min(860px, 100%);
+  padding: 40px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: 0 32px 120px rgba(15, 23, 42, 0.14);
+  backdrop-filter: blur(18px);
+}
+
+.hero-panel__eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #0284c7;
+}
+
+.hero-panel__title {
+  margin: 0;
+  font-size: clamp(2.4rem, 7vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.hero-panel__description {
+  width: min(620px, 100%);
+  margin: 20px 0 0;
+  font-size: 1.05rem;
+  color: #475569;
+}
+
+.hero-panel__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.metric-card {
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 249, 0.92));
+  border: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.metric-card__label {
+  display: block;
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.metric-card__value {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.05rem;
+  color: #0f172a;
+}
+
+@media (max-width: 640px) {
+  .home-screen {
+    padding: 16px;
+  }
+
+  .hero-panel {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  .hero-panel__description {
+    font-size: 1rem;
+  }
+}
