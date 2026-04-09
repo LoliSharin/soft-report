@@ -1,0 +1,25 @@
+{
+  "name": "soft-report",
+  "version": "1.0.0",
+  "description": "Basic Electron desktop application template with Node.js and TypeScript.",
+  "main": "dist/main.js",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc",
+    "typecheck": "tsc --noEmit",
+    "watch": "tsc -w --preserveWatchOutput",
+    "dev:electron": "wait-on dist/main.js dist/preload.js dist/renderer.js && nodemon --watch dist --watch index.html --ext js,html --exec electron .",
+    "dev": "concurrently -k -n TSC,ELECTRON -c yellow,cyan \"npm run watch\" \"npm run dev:electron\"",
+    "start": "npm run build && electron ."
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "concurrently": "^9.2.1",
+    "electron": "^41.2.0",
+    "nodemon": "^3.1.10",
+    "typescript": "^5.9.3",
+    "wait-on": "^8.0.4"
+  }
+}
