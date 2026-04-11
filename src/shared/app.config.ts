@@ -1,5 +1,8 @@
 export const appConfig = {
   name: 'Soft Report',
+  database: {
+    fileName: 'soft-report.db',
+  },
   window: {
     width: 1280,
     height: 800,
