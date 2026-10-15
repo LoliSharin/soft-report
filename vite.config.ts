@@ -13,6 +13,7 @@ export default defineConfig({
     strictPort: true,
   },
   build: {
+    target: 'chrome108',
     outDir: resolve(__dirname, 'dist/renderer'),
     emptyOutDir: false,
   },
