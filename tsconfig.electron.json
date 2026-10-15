@@ -10,8 +10,7 @@
     "types": ["node"]
   },
   "include": [
-    "src/main/**/*.ts",
-    "src/preload/**/*.ts",
+    "src/electron/**/*.ts",
     "src/shared/**/*.ts"
   ]
 }

@@ -1,8 +1,9 @@
 {
   "name": "soft-report",
   "version": "1.0.0",
-  "description": "Basic Electron desktop application template with Node.js and TypeScript.",
-  "main": "dist/main/index.js",
+  "description": "\u041d\u0430\u0441\u0442\u043e\u043b\u044c\u043d\u043e\u0435 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u0434\u043b\u044f \u0443\u0447\u0435\u0442\u0430 \u0434\u043e\u0441\u0442\u0438\u0436\u0435\u043d\u0438\u0439 \u0438 \u043c\u0435\u0440\u043e\u043f\u0440\u0438\u044f\u0442\u0438\u0439.",
+  "author": "\u0423\u0447\u0435\u0442 \u0434\u043e\u0441\u0442\u0438\u0436\u0435\u043d\u0438\u0439",
+  "main": "dist/electron/main/index.js",
   "private": true,
   "type": "commonjs",
   "scripts": {
@@ -13,25 +14,63 @@
     "typecheck": "tsc --noEmit",
     "dev:electron:compile": "tsc -p tsconfig.electron.json -w --preserveWatchOutput",
     "dev:renderer": "vite",
-    "dev:electron": "wait-on tcp:5173 dist/main/index.js dist/preload/index.js && cross-env ELECTRON_RENDERER_URL=http://127.0.0.1:5173 nodemon --watch dist --ext js --exec electron .",
+    "dev:electron": "wait-on tcp:5173 dist/electron/main/index.js dist/electron/preload/index.js && cross-env ELECTRON_RENDERER_URL=http://127.0.0.1:5173 nodemon --watch dist --ext js --exec electron .",
     "dev": "concurrently -k -n TSC,VITE,ELECTRON -c yellow,cyan,green \"npm run dev:electron:compile\" \"npm run dev:renderer\" \"npm run dev:electron\"",
-    "start": "npm run build && electron ."
+    "start": "npm run build && electron .",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "dist:win:x64:pack": "electron-builder --win nsis:x64 --config.directories.output=release/win-x64",
+    "dist:win:x32:pack": "electron-builder --win nsis:ia32 --config.directories.output=release/win-x32",
+    "dist:win:x64": "npm run build && npm run dist:win:x64:pack",
+    "dist:win:x32": "npm run build && npm run dist:win:x32:pack",
+    "dist:win:all": "npm run build && npm run dist:win:x64:pack && npm run dist:win:x32:pack",
+    "dist:legacy:win:x64:pack": "electron-builder --win nsis:x64 --config.directories.output=release/legacy-win7-x64",
+    "dist:legacy:win:x32:pack": "electron-builder --win nsis:ia32 --config.directories.output=release/legacy-win7-x32",
+    "dist:legacy:win:x64": "npm run build && npm run dist:legacy:win:x64:pack",
+    "dist:legacy:win:x32": "npm run build && npm run dist:legacy:win:x32:pack",
+    "dist:legacy:win:all": "npm run build && npm run dist:legacy:win:x64:pack && npm run dist:legacy:win:x32:pack"
   },
   "dependencies": {
+    "docx": "^9.5.1",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "sql.js": "^1.13.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.4",
     "@types/node": "^24.6.0",
+    "@types/sql.js": "^1.4.9",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
-    "electron": "^41.2.0",
+    "electron": "22.3.27",
+    "electron-builder": "^26.0.12",
     "nodemon": "^3.1.10",
     "typescript": "^5.9.3",
     "vite": "^7.1.10",
     "wait-on": "^8.0.4"
+  },
+  "build": {
+    "appId": "com.softreport.desktop",
+    "productName": "\u0423\u0447\u0435\u0442 \u0434\u043e\u0441\u0442\u0438\u0436\u0435\u043d\u0438\u0439",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "icon.ico",
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "Soft-Report-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
